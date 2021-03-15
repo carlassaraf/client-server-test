@@ -20,8 +20,8 @@ def send(msg):
     client.send(message)
     
     # Receive confirmation
-    msg_length = len(conn.recv(HEADER).decode(FORMAT))
-    msg = conn.recv(msg_length).decode(FORMAT)
+    msg_length = len(client.recv(HEADER).decode(FORMAT))
+    msg = client.recv(msg_length).decode(FORMAT)
 
 
 send('Hello world!')
