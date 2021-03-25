@@ -1,7 +1,6 @@
 import socket
 import threading
-
-# SERVER = "192.168.0.74" # Local IP Address
+import sys
 
 HEADER = 64
 PORT = 5050
@@ -37,13 +36,16 @@ def handle_client(conn, addr):
             confirm(conn)
     
     conn.close()
+    print(f"[DISCONNECT] {addr} disconnected.")
+    sys.exit()
+
 
 def start():
-    server.listen()
+    server.listen(10)
     print(f"[LISTENING] Server is listening on {SERVER}")
     while True:
         conn, addr = server.accept()     
-        confirm(conn)                                   # Wait for a connection and save the connection and address
+        confirm(conn)                                                       # Wait for a connection and save the connection and address
         thread = threading.Thread(target=handle_client, args=(conn, addr))  # Iniciate a new threat for every client
         thread.start()
         print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")

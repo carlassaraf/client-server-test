@@ -9,8 +9,9 @@ DISCONNECT_MESSAGE = '!DISCONNECT'
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
-msg_length = len(client.recv(HEADER).decode(FORMAT))
-print(client.recv(msg_length).decode(FORMAT))
+msg_length = int(client.recv(HEADER).decode(FORMAT).strip(' '))
+msg = client.recv(msg_length).decode(FORMAT)
+print(f"[SERVER] {msg}")
 
 def send(msg):
     # Send message
@@ -24,8 +25,11 @@ def send(msg):
     # Receive confirmation
     msg_length = len(client.recv(HEADER).decode(FORMAT))
     msg = client.recv(msg_length).decode(FORMAT)
+    print(f"[SERVER] {msg}")
 
-input()
-send('Hello world!')
-input()
-send(DISCONNECT_MESSAGE)
+while True:
+    msg = input()
+    if msg == 'close':
+        send(DISCONNECT_MESSAGE)
+        break
+    send(msg)
