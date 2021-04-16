@@ -2,7 +2,7 @@ import socket
 
 HEADER = 64
 PORT = 5050
-SERVER = socket.gethostbyname(socket.gethostname())
+SERVER = '192.168.0.74'     # Change for the IP of the server
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = '!DISCONNECT'
@@ -11,7 +11,7 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(ADDR)
 msg_length = int(client.recv(HEADER).decode(FORMAT).strip(' '))
 msg = client.recv(msg_length).decode(FORMAT)
-print(f"[SERVER] {msg}")
+print(f"[SERVER] : {msg}")
 
 def send(msg):
     # Send message
@@ -25,7 +25,7 @@ def send(msg):
     # Receive confirmation
     msg_length = len(client.recv(HEADER).decode(FORMAT))
     msg = client.recv(msg_length).decode(FORMAT)
-    print(f"[SERVER] {msg}")
+    print(f"[SERVER] : {msg}")
 
 while True:
     msg = input()
